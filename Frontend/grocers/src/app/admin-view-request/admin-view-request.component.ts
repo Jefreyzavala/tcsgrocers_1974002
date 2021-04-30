@@ -17,6 +17,12 @@ export class AdminViewRequestComponent implements OnInit {
     console.log(this.product)
   }
 
+  deleteRequest(event:any){
+    console.log(event.target.id)
+    this.proServ.deleteRequest(event.target.id).subscribe((res:string)=>{
+      alert(res)
+    })
+  }
 
   adminHomePage(){
     this.router.navigate(["/admin_dashboard"])

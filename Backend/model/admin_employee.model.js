@@ -5,7 +5,8 @@ let adminEmployeeSchema=mongoose.Schema({
     first_name:String,
     last_name:String,
     email_id:String,
-    password:String
+    password:{type:String,default:"Welcome@123"},
+    status:{type:String,default:"active"}
     
 })
 

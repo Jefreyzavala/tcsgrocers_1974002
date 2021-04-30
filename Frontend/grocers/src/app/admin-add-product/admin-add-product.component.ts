@@ -21,6 +21,6 @@ export class AdminAddProductComponent implements OnInit {
   storeProduct(productRef:any){
     console.log(productRef)
     this.proServ.storeProductDetails(productRef)
-    alert("Record Added Successfully")
+    alert("Record Added Successfully")  
   }
 }

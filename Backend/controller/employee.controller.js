@@ -10,7 +10,7 @@ let storeRequest=(req,res)=>{
     employeeRequest.save((err,result)=>{
         if(!err){
             console.log(result)
-            res.send("Record stored successfully")
+            res.send("Request stored successfully")
         }else{
             res.send("error in storing data" + err)
         }
@@ -35,6 +35,7 @@ let addempdetails=(req,res)=>{
         last_name:req.body.last_name,
         email_id:req.body.email_id,
         password:req.body.password,
+        status:req.body.status
     })
 
     employeeRequest.save((err,result)=>{
@@ -64,4 +65,58 @@ let deleteempbyemailid=(req,res)=>{
     })
 }
 
-module.exports={storeRequest,getRequest,addempdetails,deleteempbyemailid}
+
+let checkCredentials=(req,res)=>{
+    adminEmployeeModel.find({},(err,result)=>{
+        if(!err){
+            res.json(result)
+        }
+    })
+}
+
+let editEmployeeProfile=(req,res)=>{
+    let emailid=req.body.email_id
+    let updatedpassword=req.body.password
+    
+
+    adminEmployeeModel.updateMany({email_id:emailid},{$set:{password:updatedpassword}},(err,result)=>{
+        if(!err){
+            if(result.nModified>0){
+                    res.send("Password updated succesfully")
+            }else {
+                    res.send("No such Product");
+            }
+        }else {
+            res.send("Error");
+        }
+    })
+}
+
+let getEmpDetails=(req,res)=>{
+    adminEmployeeModel.find({},(err,result)=>{
+        if(!err){
+            res.json(result)
+        }
+    })
+}
+
+let editEmployeeStatus=(req,res)=>{
+    let emailid=req.body.email_id
+    let updatedpassword=req.body.password
+    let updatestatus="inactive"
+
+    adminEmployeeModel.updateMany({email_id:emailid},{$set:{password:updatedpassword,status:updatestatus}},(err,result)=>{
+        if(!err){
+            if(result.nModified>0){
+                    res.send("Password updated succesfully")
+            }else {
+                    res.send("No such Product");
+            }
+        }else {
+            res.send("Error");
+        }
+    })
+}
+
+module.exports={storeRequest,getRequest,addempdetails,deleteempbyemailid,checkCredentials,editEmployeeProfile,getEmpDetails, editEmployeeStatus}
+

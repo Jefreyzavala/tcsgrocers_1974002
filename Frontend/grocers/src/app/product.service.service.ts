@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { observable, Observable, throwError } from 'rxjs';
-
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Cart } from './model.cart';
+import { Funds } from './model.funds';
 
 
 
@@ -35,30 +36,126 @@ export class ProductServiceService {
     .subscribe(res=>{console.log(res)},err=>{console.log(err)})
   }
 
+  get_emp_details():Observable<[]>{
+    return this.http.get<[]>("http://localhost:9090/employee/checkCredentials/")
+  }
+
   deleteEmp(email_id:any):any{
     return this.http.delete("http://localhost:9090/employee/delete_emp_by_email/"+email_id,{responseType:'text'})
   }
-  signIn(data):Observable<any>{
-    return this.http.post<any>("http://localhost:9090/user/signIn",data)
+
+  checkEmployeeCredentials():Observable<[]>{
+    return this.http.get<[]>("http://localhost:9090/employee/checkCredentials/")
   }
-  signUp(data):Observable<any>{
-    return this.http.post<any>("http://localhost:9090/user/signup",data,{headers:this.getHeaders()})
-    
+
+  employeeSendRequest(empRef:any){
+    this.http.post("http://localhost:9090/employee/storeRequest/",empRef)
+    .subscribe(res=>{console.log(res)},err=>{console.log(err)})
   }
-  getHeaders() {
-    const headers = new HttpHeaders({
-      'Content-type': 'application/json',
-    })
-    return headers
+
+
+  editProfile(productRef:any){
+    return this.http.put("http://localhost:9090/employee/editProfile",productRef,{responseType:'text'})    
   }
-  handleError(error) {
-    let errorMessage = '';
-    if (error.eror instanceof ErrorEvent) {
-      errorMessage = `error: ${error.error.message}`;
-    } else {
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`
-    }
-    window.alert(errorMessage);
-    return throwError(errorMessage);
+
+  editStatus(productRef:any){
+    return this.http.put("http://localhost:9090/employee/editEmpStatus/",productRef,{responseType:'text'})    
+  }
+
+  getUserDetails():Observable<[]>{
+    return this.http.get<[]>("http://localhost:9090/user/signin")   
+  }
+
+  employeeRaiseTicket(empRef:any){
+    this.http.post("http://localhost:9090/user/raiseTicket",empRef)
+    .subscribe(res=>{console.log(res)},err=>{console.log(err)})
+  }
+
+  getraiseTickets():Observable<[]>{
+    return this.http.get<[]>("http://localhost:9090/user/getraiseTicket")   
+  }
+
+  user_sign_up(empRef:any){
+    this.http.post("http://localhost:9090/user/signup",empRef)
+    .subscribe(res=>{console.log(res)},err=>{console.log(err)})
+  }
+
+  editUserProfile(productRef:any){
+    return this.http.put("http://localhost:9090/user/editUserProfile",productRef,{responseType:'text'})    
+  }
+
+  getProductDetails():Observable<[]>{
+    return this.http.get<[]>("http://localhost:9090/admin_dashboard/getProductDetails")   
+  }
+
+  addToCart(empRef:any){
+    this.http.post("http://localhost:9090/user/addToCart",empRef)
+    .subscribe(res=>{console.log(res)},err=>{console.log(err)})
+  }
+
+  deleteFromCart(pname:any):any{
+    return this.http.delete("http://localhost:9090/user/deleteFromCart/"+pname,{responseType:'text'})
+  }
+
+  viewCartItems():Observable<[]>{
+    return this.http.get<[]>("http://localhost:9090/user/viewCartItems/")
+  }
+
+  viewCart():Observable<[Cart]>{
+    return this.http.get<[Cart]>("http://localhost:9090/user/viewCartItems/")
+  }
+
+  addFunds(empRef:any){
+    this.http.post("http://localhost:9090/user/addFunds",empRef)
+    .subscribe(res=>{console.log(res)},err=>{console.log(err)})
+  }
+
+  getFunds():Observable<[]>{
+    return this.http.get<[]>("http://localhost:9090/user/getFunds")   
+  }
+
+  getStoredFunds():Observable<[Funds]>{
+    return this.http.get<[Funds]>("http://localhost:9090/user/getFunds")   
+  }
+
+  deleteRequest(request:any):any{
+    return this.http.delete("http://localhost:9090/admin_dashboard/deleteRequest/"+request,{responseType:'text'})
+  }
+
+  updateIncorrectCount(productRef:any){
+    return this.http.put("http://localhost:9090/user/updateIncorrectCount",productRef,{responseType:'text'})    
+  }
+  
+  updateIncorrectCountlock(productRef:any){
+    return this.http.put("http://localhost:9090/user/updateIncorrectlock",productRef,{responseType:'text'})    
+  }
+
+  deleteUserTicket(email:any):any{
+    return this.http.delete("http://localhost:9090/user/deleteTicket/"+email,{responseType:'text'})
+  }
+
+  unlockUsers(email:any){
+    return this.http.put("http://localhost:9090/user/unlockUser",email,{responseType:'text'})    
+  }
+
+  
+  updateUsersFunds(empRef:any){
+    this.http.post("http://localhost:9090/user/updateUsersFunds/",empRef)
+    .subscribe(res=>{console.log(res)},err=>{console.log(err)})
+  }
+
+  updateCartItems(pname:any){
+    return this.http.put("http://localhost:9090/user/updateCartItems",pname,{responseType:'text'})
+  }
+  updateCartItemsCancel(pname:any){
+    return this.http.put("http://localhost:9090/user/updateCartItemsCancel",pname,{responseType:'text'})
+  }
+
+  viewCartItemsReport():Observable<[Cart]>{
+    return this.http.get<[Cart]>("http://localhost:9090/user/viewCartItemsReport/")
+  }
+
+  editFunds(productRef:any){
+    return this.http.put("http://localhost:9090/user/editFunds",productRef,{responseType:'text'})    
   }
 }

@@ -1,4 +1,4 @@
-var app = require("express")();
+let app = require("express")();
 let bodyParser = require("body-parser");
 let mongoose = require("mongoose");
 let cors = require("cors");
@@ -18,36 +18,17 @@ const mongooseDbOptions = {
   useNewUrlParser: true,
 };
 
-var allowCrossDomain = function(req, res, next) {
-  // console.log(Object.keys(req));
-  // console.log(req.headers['ip-address']);
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Accept');
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  // intercept OPTIONS method
-  if ('OPTIONS' == req.method) {
-      //res.send(200);
-      res.status(200).end()
-  } else {
-      next();
-  }
-};
-app.use(allowCrossDomain);
-
-
 mongoose.connect(url, mongooseDbOptions);
 
 
 mongoose.connection;
-process.env.SECRET_KEY = 'secret';
 
 
 var AdminRouter = require("./routers/admin.router");
 
 var ProductRotuer = require("./routers/product.router");
 
-var User = require("./api/users/users.router.js");
+var User = require("./routers/user.router.js");
 
 var EmployeeRouter = require("./routers/employee.router");
 
@@ -58,6 +39,30 @@ var EmployeeRouter = require("./routers/employee.router");
 // http://localhost:9090/admin_dashboard/updateProductDetails         {"pname":"tv","price":567,"pquantity":89}   
 // http://localhost:9090/employee/storeRequest/                       {"request":"Please change the car price"}  sarafudeen API
 // http://localhost:9090/employee/viewRequest/
+// http://localhost:9090/employee/add-emp-details/
+// http://localhost:9090/employee/delete_emp_by_email/:email_id
+// http://localhost:9090/employee/checkCredentials/
+// http://localhost:9090/employee/editProfile
+// http://localhost:9090/employee/get-emp-details/
+// http://localhost:9090/employee/editEmpStatus/
+// http://localhost:9090/user/signup
+// http://localhost:9090/user/signin
+// http://localhost:9090/user/raiseTicket
+// http://localhost:9090/user/getraiseTicket
+// http://localhost:9090/user/editUserProfile
+// http://localhost:9090/admin_dashboard/getProductDetails
+// http://localhost:9090/user/addToCart
+// http://localhost:9090/user/deleteFromCart/car
+// http://localhost:9090/user/viewCartItems/
+// http://localhost:9090/user/addFunds
+// http://localhost:9090/user/getFunds
+// http://localhost:9090/admin_dashboard/deleteRequest/:request
+// http://localhost:9090/user/updateIncorrectCount
+// http://localhost:9090/user/updateIncorrectlock
+// http://localhost:9090/user/deleteTicket/:email
+// http://localhost:9090/user/updateCartItems
+// http://localhost:9090/user/updateCartItemsCancel
+// http://localhost:9090/user/viewCartItemsReport/
 
 app.use("/admin_dashboard", AdminRouter);
 // middleware

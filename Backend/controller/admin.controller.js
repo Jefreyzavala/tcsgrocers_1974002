@@ -1,5 +1,5 @@
 let adminModel=require("../model/admin.model.js")
-
+let employeeModel=require("../model/employee.model.js")
 
 let storeProductDetails=(req,res)=>{
     let product=new adminModel({
@@ -61,4 +61,28 @@ let updateProductByName=(req,res)=>{
     })
 }
 
-module.exports={storeProductDetails,deleteProductByName,updateProductByName, viewRequest}
+let getProductDetails=(req,res)=>{
+    adminModel.find({},(err,result)=>{
+        if(!err){
+            res.json(result)
+        }
+    })
+
+}
+
+let deleteRequest=(req,res)=>{
+    let request=req.params.request
+    employeeModel.deleteOne({request:request},(err,result)=>{
+        if(!err){
+            if(result.deletedCount>0){
+                res.send("Product deleted Successfully")
+            }else{
+                res.send("No such Product available")
+            }
+        }else{
+            res.send("Error generated" + err)
+        }
+    })
+}
+
+module.exports={storeProductDetails,deleteProductByName,updateProductByName, viewRequest, getProductDetails,deleteRequest}

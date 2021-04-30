@@ -40,4 +40,8 @@ export class AdminDashboardComponent implements OnInit {
   deleteEmp(){
     this.router.navigate(["/delete-emp"])
   }
+
+  generateReport(){
+    this.router.navigate(["/generateProductReport"])
+  }
 }
